@@ -1,0 +1,16 @@
+# Default ignored files
+/workspace.xml
+!requirements.txt
+!.gitignore
+.idea/
+media/
+fixtures/
+log/
+__pycache__/
+localsettings.py
+.vscode
+*.pyc
+.project
+*.json
+*.db
+db.*
