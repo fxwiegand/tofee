@@ -2,7 +2,8 @@ from django.db import models
 
 
 class Question(models.Model):
-    question_text = models.CharField(max_length=200)
+    question_text = models.CharField(max_length=200, verbose_name = 'Frage')
+    detail_text = models.TextField(verbose_name = 'Details zur Frage', null=True, blank=True)
     pub_date = models.DateTimeField('date published')
 
     def __str__(self):

@@ -1,0 +1,25 @@
+{% extends 'bootstrap4/bootstrap4.html' %}
+{% load bootstrap4 static i18n %}
+
+{% block bootstrap4_extra_head %}
+{{ block.super }}
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+{% bootstrap_javascript jquery='full' %}
+{% endblock %}
+
+{% block bootstrap4_title %}{% trans 'tofee' %}{% endblock %}
+{% block title %}{% endblock %}
+
+{% block bootstrap4_content %}
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <h3 class="page_title">{% block page_title %}{% endblock %}</h3>
+            <hr class="narrow" />
+            {% bootstrap_messages %}
+            {% block content %}{% endblock %}
+        </div>
+    </div>
+</div>
+{% endblock %}

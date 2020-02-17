@@ -1,9 +1,22 @@
+{% extends "base.html" %}
+{% load bootstrap4 i18n static %}
+
+{% block content %}
 {% if latest_question_list %}
-    <ul>
+    <div class="list-group">
     {% for question in latest_question_list %}
-        <li><a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a></li>
+        <a href="{% url 'polls:detail' question.id %}" class="list-group-item list-group-item-action">
+            <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">{{ question.question_text }}</h5>
+                <small>{{ question.pub_date }}</small>
+            </div>
+            <p class="mb-1">{{ question.detail_text }}</p>
+        </a>
     {% endfor %}
-    </ul>
+    </div>
 {% else %}
     <p>No polls are available.</p>
 {% endif %}
+
+
+{% endblock %}
