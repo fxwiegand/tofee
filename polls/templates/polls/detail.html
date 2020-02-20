@@ -2,8 +2,8 @@
 {% load bootstrap4 i18n static %}
 
 {% block page_title %}{{ question.question_text }}{% endblock %}
-
 {% block content %}
+    <p>{{ question.detail_text }}</p>
 <form action="{% url 'polls:vote' question.id %}" method="post">
 {% csrf_token %}
 {% for choice in question.choice_set.all %}
@@ -12,4 +12,5 @@
 {% endfor %}
 <button class="btn btn-primary" type="submit" value="Vote">Vote</button>
 </form>
+
 {% endblock %}
