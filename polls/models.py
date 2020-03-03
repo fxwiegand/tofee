@@ -17,3 +17,9 @@ class Choice(models.Model):
 
     def __str__(self):
         return self.choice_text
+
+
+class Comment(models.Model):
+    name = models.CharField(verbose_name='Name', max_length=100)
+    email = models.EmailField(verbose_name='Email Adresse')
+    text = models.TextField(verbose_name='Feedback')

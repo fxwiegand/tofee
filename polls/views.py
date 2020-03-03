@@ -4,16 +4,28 @@ from django.urls import reverse
 from django.views import generic
 from django.utils.translation import ugettext_lazy as _
 
-from .models import Choice, Question
+from .models import Choice, Question, Comment
 
 
-class IndexView(generic.ListView):
+# class IndexView(generic.ListView):
+#     template_name = 'polls/index.html'
+#     context_object_name = 'latest_question_list'
+#
+#     def get_queryset(self):
+#         """Return the last five published questions."""
+#         return Question.objects.order_by('-pub_date')[:5]
+
+
+class CommentCreateView(generic.CreateView):
+    model = Comment
+    fields = ['name', 'email', 'text']
     template_name = 'polls/index.html'
-    context_object_name = 'latest_question_list'
+    success_url = '/'
 
-    def get_queryset(self):
-        """Return the last five published questions."""
-        return Question.objects.order_by('-pub_date')[:5]
+    def get_context_data(self, **kwargs):
+        context = super(CommentCreateView, self).get_context_data(**kwargs)
+        context['latest_question_list'] = Question.objects.order_by('-pub_date')[:5]
+        return context
 
 
 class DetailView(generic.DetailView):

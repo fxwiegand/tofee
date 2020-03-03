@@ -18,5 +18,18 @@
     <p>No polls are available.</p>
 {% endif %}
 
+<div class="row" style="margin-top: 2rem;">
+    <div class="col">
+        <h4>Ihr persönliches Feedback hier:</h4>
+        <hr/>
+        <form method="post" role="form" action="">
+            {% csrf_token %}
+            {% bootstrap_form form %}
+            <button class="btn btn-primary" type="submit" formnovalidate>
+                Absenden
+            </button>
+        </form>
+    </div>
+</div>
 
 {% endblock %}
