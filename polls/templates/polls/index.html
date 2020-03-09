@@ -13,23 +13,10 @@
             <p class="mb-1">{{ question.detail_text }}</p>
         </a>
     {% endfor %}
+        <p>Sie haben Fragen oder Anmerkungen? <a href="{% url 'polls:feedback' %}" class="page_title">Schreiben sie uns gerne hier.</a></p>
     </div>
 {% else %}
     <p>No polls are available.</p>
 {% endif %}
-
-<div class="row" style="margin-top: 2rem;">
-    <div class="col">
-        <h4>Ihr persönliches Feedback hier:</h4>
-        <hr/>
-        <form method="post" role="form" action="">
-            {% csrf_token %}
-            {% bootstrap_form form %}
-            <button class="btn btn-primary" type="submit" formnovalidate>
-                Absenden
-            </button>
-        </form>
-    </div>
-</div>
 
 {% endblock %}

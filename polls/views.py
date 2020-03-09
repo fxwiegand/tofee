@@ -16,17 +16,22 @@ from .models import Choice, Question, Comment
 #         return Question.objects.order_by('-pub_date')[:5]
 
 
-class CommentCreateView(generic.CreateView):
+class PollsView(generic.CreateView):
     model = Comment
     fields = ['name', 'email', 'text']
     template_name = 'polls/index.html'
     success_url = '/'
 
     def get_context_data(self, **kwargs):
-        context = super(CommentCreateView, self).get_context_data(**kwargs)
+        context = super(PollsView, self).get_context_data(**kwargs)
         context['latest_question_list'] = Question.objects.order_by('-pub_date')[:5]
         return context
 
+class CommentCreateView(generic.CreateView):
+    model = Comment
+    fields = ['name', 'email', 'text']
+    template_name = 'polls/feedback.html'
+    success_url = '/'
 
 class DetailView(generic.DetailView):
     model = Question
