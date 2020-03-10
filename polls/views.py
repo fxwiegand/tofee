@@ -4,8 +4,11 @@ from django.urls import reverse
 from django.views import generic
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import login, authenticate
+from django.shortcuts import render, redirect
 
 from .models import Choice, Question, Comment
+from .forms import SignUpForm
 
 
 # class IndexView(generic.ListView):
@@ -63,3 +66,17 @@ def vote(request, question_id):
         # with POST data. This prevents data from being posted twice if a
         # user hits the Back button.
         return redirect(reverse('polls:results', args=(question.id,)))
+
+def signup(request):
+        if request.method == 'POST':
+            form = SignUpForm(request.POST)
+            if form.is_valid():
+                form.save()
+                username = form.cleaned_data.get('username')
+                raw_password = form.cleaned_data.get('password1')
+                user = authenticate(username=username, password=raw_password)
+                login(request, user)
+                return redirect('polls:index')
+        else:
+            form = SignUpForm()
+        return render(request, 'polls/signup.html', {'form': form})
