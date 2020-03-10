@@ -3,6 +3,7 @@ from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse
 from django.views import generic
 from django.utils.translation import ugettext_lazy as _
+from django.contrib.auth.decorators import login_required
 
 from .models import Choice, Question, Comment
 
@@ -42,7 +43,8 @@ class ResultsView(generic.DetailView):
     model = Question
     template_name = 'polls/results.html'
 
-
+#temporary check for being logged in to vote
+@login_required(login_url="/polls/login/")
 def vote(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
     try:

@@ -11,12 +11,33 @@
 {% block bootstrap4_title %}{% trans 'tofee' %}{% endblock %}
 {% block title %}{% endblock %}
 
+
 {% block bootstrap4_content %}
 <div class="container">
     <div class="row">
-        <div class="col-12">
+        <div class="col-8">
             <h1><a href="{% url 'polls:index' %}" class="page_title">tofee</a></h1>
             <h3 class="page_title">{% block page_title %}{% endblock %}</h3>
+        </div>
+        <!-- login buttons -->
+        <div class="col-2" style="padding-top: 20px">
+            {% if user.is_staff %}
+                <a href="{% url 'admin:index' %}" class="page_title"><button>Zur Adminpage</button></a>
+            {% endif %}
+        </div>
+        <div class="col-2" style="padding-top: 20px">
+            {% if user.is_authenticated %}
+                <form method="post" action="{% url 'logout' %}">
+                    {% csrf_token %}
+                    <input type="submit" value="Logout">
+                </form>
+            {% else %}
+                <a href="{% url 'polls:login' %}" class="page_title"><button>Zum Login</button></a>
+            {% endif %}
+        </div><!-- END login buttons -->
+    </div>
+    <div class="row">
+        <div class="col-12">
             <hr class="narrow" />
             {% bootstrap_messages %}
             {% block content %}{% endblock %}
