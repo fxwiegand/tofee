@@ -18,7 +18,7 @@
 {% if user.is_authenticated %}
     <form method="post" action="{% url 'logout' %}">
 {% csrf_token %}
-    <input type="submit" value="logout">
+    <input type="submit" class="btn btn-primary" value="logout">
 </form>
 {% else %}
     <form method="post" action="{% url 'polls:login' %}">
@@ -34,7 +34,7 @@
     </tr>
     </table>
 
-    <input type="submit" value="login">
+    <input class="btn btn-primary" type="submit" value="Einloggen">
     <input type="hidden" name="next" value="{{ next }}">
     <p>Noch nicht angemeldet? <a href="{% url 'polls:signup' %}">hier registrieren.</a></p>
     </form>

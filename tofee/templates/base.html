@@ -22,17 +22,17 @@
         <!-- login buttons -->
         <div class="col-2" style="padding-top: 20px">
             {% if user.is_staff %}
-                <a href="{% url 'admin:index' %}" class="page_title"><button>Zur Adminpage</button></a>
+                <a href="{% url 'admin:index' %}" class="page_title"><button class="btn btn-primary">Zur Adminpage</button></a>
             {% endif %}
         </div>
         <div class="col-2" style="padding-top: 20px">
             {% if user.is_authenticated %}
                 <form method="post" action="{% url 'logout' %}">
                     {% csrf_token %}
-                    <input type="submit" value="Logout">
+                    <input class="btn btn-primary" type="submit" value="Logout">
                 </form>
             {% else %}
-                <a href="{% url 'polls:login' %}" class="page_title"><button>Zum Login</button></a>
+                <a href="{% url 'polls:login' %}" class="page_title"><button class="btn btn-primary">Zum Login</button></a>
             {% endif %}
         </div><!-- END login buttons -->
     </div>
