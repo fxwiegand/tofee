@@ -10,6 +10,8 @@ from django.shortcuts import render, redirect
 from .models import Choice, Question, Comment
 from .forms import SignUpForm
 
+from datetime import datetime
+
 
 # class IndexView(generic.ListView):
 #     template_name = 'polls/index.html'
@@ -28,14 +30,16 @@ class PollsView(generic.CreateView):
 
     def get_context_data(self, **kwargs):
         context = super(PollsView, self).get_context_data(**kwargs)
-        context['latest_question_list'] = Question.objects.order_by('-pub_date')[:5]
+        context['latest_question_list'] = Question.objects.filter(end__gt=datetime.now()).order_by('-pub_date')[:5]
         return context
+
 
 class CommentCreateView(generic.CreateView):
     model = Comment
     fields = ['name', 'email', 'text']
     template_name = 'polls/feedback.html'
     success_url = '/'
+
 
 class DetailView(generic.DetailView):
     model = Question
@@ -46,7 +50,8 @@ class ResultsView(generic.DetailView):
     model = Question
     template_name = 'polls/results.html'
 
-#temporary check for being logged in to vote
+
+# temporary check for being logged in to vote
 @login_required(login_url="/polls/login/")
 def vote(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
@@ -67,16 +72,17 @@ def vote(request, question_id):
         # user hits the Back button.
         return redirect(reverse('polls:results', args=(question.id,)))
 
+
 def signup(request):
-        if request.method == 'POST':
-            form = SignUpForm(request.POST)
-            if form.is_valid():
-                form.save()
-                username = form.cleaned_data.get('username')
-                raw_password = form.cleaned_data.get('password1')
-                user = authenticate(username=username, password=raw_password)
-                login(request, user)
-                return redirect('polls:index')
-        else:
-            form = SignUpForm()
-        return render(request, 'polls/signup.html', {'form': form})
+    if request.method == 'POST':
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data.get('username')
+            raw_password = form.cleaned_data.get('password1')
+            user = authenticate(username=username, password=raw_password)
+            login(request, user)
+            return redirect('polls:index')
+    else:
+        form = SignUpForm()
+    return render(request, 'polls/signup.html', {'form': form})
