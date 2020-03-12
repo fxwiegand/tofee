@@ -15,17 +15,23 @@
 {% block bootstrap4_content %}
 <div class="container">
     <div class="row">
-        <div class="col-8">
+        <div class="col-6">
             <h1><a href="{% url 'polls:index' %}" class="page_title">tofee</a></h1>
             <h3 class="page_title">{% block page_title %}{% endblock %}</h3>
         </div>
-        <!-- login buttons -->
-        <div class="col-2" style="padding-top: 20px">
+        <div class="col-1.5" style="padding-top: 20px">
             {% if user.is_staff %}
                 <a href="{% url 'admin:index' %}" class="page_title"><button class="btn btn-primary">Zur Adminpage</button></a>
             {% endif %}
-        </div>
-        <div class="col-2" style="padding-top: 20px">
+        </div><!-- END admin button -->
+        <!-- user information -->
+        <div class="col-3">
+                {{ user.get_full_name }}<br />
+                Username: {{ user.username }}<br />
+                Bezirk: {{ user.profile.neighborhood }}<br />
+        </div><!-- END user information -->
+        <!-- login buttons -->
+        <div class="col-1.5" style="padding-top: 20px">
             {% if user.is_authenticated %}
                 <form method="post" action="{% url 'logout' %}">
                     {% csrf_token %}
@@ -35,6 +41,7 @@
                 <a href="{% url 'polls:login' %}" class="page_title"><button class="btn btn-primary">Zum Login</button></a>
             {% endif %}
         </div><!-- END login buttons -->
+        <!-- admin button -->
     </div>
     <div class="row">
         <div class="col-12">
