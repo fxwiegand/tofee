@@ -32,19 +32,19 @@ class Comment(models.Model):
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
     neighborhoodChoices = (
-        ('kei', ("Keine Angabe")),
-        ('apl', ("Aplerbeck")),
-        ('bra', ("Brackel")),
-        ('evi', ("Eving")),
-        ('hom', ("Hombruch")),
-        ('hoe', ("Hörde")),
-        ('huc', ("Huckarde")),
-        ('inn', ("Innenstadt-Nord")),
-        ('ino', ("Innenstadt-Ost")),
-        ('inw', ("Innenstadt-West")),
-        ('lue', ("Lütgendortmund")),
-        ('men', ("Mengede")),
-        ('sch', ("Scharnhorst")),
+        ('kei', "Keine Angabe"),
+        ('apl', "Aplerbeck"),
+        ('bra', "Brackel"),
+        ('evi', "Eving"),
+        ('hom', "Hombruch"),
+        ('hoe', "Hörde"),
+        ('huc', "Huckarde"),
+        ('inn', "Innenstadt-Nord"),
+        ('ino', "Innenstadt-Ost"),
+        ('inw', "Innenstadt-West"),
+        ('lue', "Lütgendortmund"),
+        ('men', "Mengede"),
+        ('sch', "Scharnhorst"),
     )
     neighborhood = models.CharField(help_text='Optional.', max_length=10, verbose_name='Ihr Bezirk', choices=neighborhoodChoices)
 

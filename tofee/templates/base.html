@@ -15,7 +15,7 @@
 {% block bootstrap4_content %}
 <div class="container">
     <div class="row">
-        <div class="col-6">
+        <div class="col-6" style="padding-top: 20px">
             <h1><a href="{% url 'polls:index' %}" class="page_title">tofee</a></h1>
             <h3 class="page_title">{% block page_title %}{% endblock %}</h3>
         </div>
@@ -25,11 +25,20 @@
             {% endif %}
         </div><!-- END admin button -->
         <!-- user information -->
-        <div class="col-3">
-                {{ user.get_full_name }}<br />
-                Username: {{ user.username }}<br />
-                Bezirk: {{ user.profile.neighborhood }}<br />
-        </div><!-- END user information -->
+        {% if user.is_authenticated %}
+        <div class="col-4.5" style="padding-top: 20px">
+            <div class="btn-group" role="group" style="margin-right: 10px">
+                <button type="button" class="btn btn-primary">
+                    <span style="white-space: nowrap;">{{ user.get_full_name }}</span>
+                </button>
+                <span type="badge" class="btn btn-secondary">
+                    <span style="white-space: nowrap;">{{ user.profile.get_neighborhood_display }}</span>
+                </span>
+            </div>
+        </div>
+        {% endif %}
+        <!-- END user information -->
+
         <!-- login buttons -->
         <div class="col-1.5" style="padding-top: 20px">
             {% if user.is_authenticated %}
