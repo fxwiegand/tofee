@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Question, Choice, Comment, Profile, Neighborhood
+from .models import Question, Choice, Comment, Profile, Neighborhood, Category
 
 
 class ChoiceInlineAdmin(admin.TabularInline):
@@ -11,6 +11,11 @@ class ChoiceInlineAdmin(admin.TabularInline):
 @admin.register(Neighborhood)
 class NeighborhoodAdmin(admin.ModelAdmin):
     model = Neighborhood
+
+
+@admin.register(Category)
+class CategoryAdmin(admin.ModelAdmin):
+    model = Category
 
 
 @admin.register(Question)

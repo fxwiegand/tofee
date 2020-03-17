@@ -3,16 +3,26 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
+
 class Neighborhood(models.Model):
     neighborhood = models.CharField(max_length=200, verbose_name='Stadtbezirk')
 
     def __str__(self):
         return self.neighborhood
 
+
+class Category(models.Model):
+    neighborhood = models.CharField(max_length=200, verbose_name='Kategorie')
+
+    def __str__(self):
+        return self.neighborhood
+
+
 class Question(models.Model):
     question_text = models.CharField(max_length=200, verbose_name='Frage')
     detail_text = models.TextField(verbose_name='Details zur Frage', null=True, blank=True)
     neighborhood = models.ManyToManyField(Neighborhood)
+    category = models.ManyToManyField(Category)
     pub_date = models.DateTimeField('Veröffentlichungszeitpunkt')
     end = models.DateTimeField(verbose_name="Endzeitpunkt der Umfrage")
 
@@ -24,7 +34,6 @@ class Choice(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
     choice_text = models.CharField(max_length=200)
     votes = models.IntegerField(default=0)
-
 
     def __str__(self):
         return self.choice_text
