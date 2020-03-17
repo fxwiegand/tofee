@@ -30,7 +30,14 @@ class PollsView(generic.CreateView):
 
     def get_context_data(self, **kwargs):
         context = super(PollsView, self).get_context_data(**kwargs)
-        context['latest_question_list'] = Question.objects.filter(end__gt=datetime.now()).order_by('-pub_date')[:5]
+        if self.request.user.is_authenticated:
+            context['latest_question_list'] = Question.objects.filter(
+                end__gt=datetime.now(), neighborhood=self.request.user.profile.neighborhood
+            ).order_by('-pub_date')[:5]
+        else:
+            context['latest_question_list'] = Question.objects.filter(
+                end__gt=datetime.now()
+            ).order_by('-pub_date')[:5]
         return context
 
 
