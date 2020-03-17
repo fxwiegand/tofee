@@ -6,11 +6,11 @@ from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, authenticate
 from django.shortcuts import render, redirect
+from django.utils import timezone
 
 from .models import Choice, Question, Comment
 from .forms import SignUpForm
 
-from datetime import datetime
 
 
 # class IndexView(generic.ListView):
@@ -29,14 +29,15 @@ class PollsView(generic.CreateView):
     success_url = '/'
 
     def get_context_data(self, **kwargs):
+        now = timezone.now()
         context = super(PollsView, self).get_context_data(**kwargs)
         if self.request.user.is_authenticated:
             context['latest_question_list'] = Question.objects.filter(
-                end__gt=datetime.now(), neighborhood=self.request.user.profile.neighborhood
+                end__gt=now, neighborhood=self.request.user.profile.neighborhood
             ).order_by('-pub_date')[:5]
         else:
             context['latest_question_list'] = Question.objects.filter(
-                end__gt=datetime.now()
+                end__gt=now
             ).order_by('-pub_date')[:5]
         return context
 
