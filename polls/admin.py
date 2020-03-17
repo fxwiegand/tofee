@@ -1,11 +1,17 @@
 from django.contrib import admin
 
-from .models import Question, Choice, Comment, Profile
+from .models import Question, Choice, Comment, Profile, Neighborhood
 
 
 class ChoiceInlineAdmin(admin.TabularInline):
     model = Choice
     extra = 2
+
+
+@admin.register(Neighborhood)
+class NeighborhoodAdmin(admin.ModelAdmin):
+    model = Neighborhood
+
 
 @admin.register(Question)
 class QuestionAdmin(admin.ModelAdmin):
@@ -16,6 +22,7 @@ class QuestionAdmin(admin.ModelAdmin):
 class CommentAdmin(admin.ModelAdmin):
     model = Comment
     list_display = ['name']
+
 
 @admin.register(Profile)
 class CommentAdmin(admin.ModelAdmin):

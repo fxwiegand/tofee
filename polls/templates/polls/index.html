@@ -11,6 +11,9 @@
                 <small>{{ question.pub_date }}</small>
             </div>
             <p class="mb-1">{{ question.detail_text }}</p>
+            {% for area in question.neighborhood.all %}
+                <span class="badge badge-primary">{{ area }}</span>
+            {% endfor %}
         </a>
     {% endfor %}
         <div class="row" style="margin-top: 2rem;">
