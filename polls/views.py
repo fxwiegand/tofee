@@ -8,7 +8,7 @@ from django.contrib.auth import login, authenticate
 from django.shortcuts import render, redirect
 from django.utils import timezone
 
-from .models import Choice, Question, Comment
+from .models import Choice, Question, Comment, Category
 from .forms import SignUpForm
 
 
@@ -31,6 +31,7 @@ class PollsView(generic.CreateView):
     def get_context_data(self, **kwargs):
         now = timezone.now()
         context = super(PollsView, self).get_context_data(**kwargs)
+        context['category_list'] = Category.objects.all()
         if self.request.user.is_authenticated:
             context['latest_question_list'] = Question.objects.filter(
                 end__gt=now, neighborhood=self.request.user.profile.neighborhood

@@ -12,17 +12,17 @@ class Neighborhood(models.Model):
 
 
 class Category(models.Model):
-    neighborhood = models.CharField(max_length=200, verbose_name='Kategorie')
+    category = models.CharField(max_length=200, verbose_name='Kategorie')
 
     def __str__(self):
-        return self.neighborhood
+        return self.category
 
 
 class Question(models.Model):
     question_text = models.CharField(max_length=200, verbose_name='Frage')
     detail_text = models.TextField(verbose_name='Details zur Frage', null=True, blank=True)
     neighborhood = models.ManyToManyField(Neighborhood)
-    category = models.ManyToManyField(Category)
+    categories = models.ManyToManyField(Category)
     pub_date = models.DateTimeField('Veröffentlichungszeitpunkt')
     end = models.DateTimeField(verbose_name="Endzeitpunkt der Umfrage")
 
