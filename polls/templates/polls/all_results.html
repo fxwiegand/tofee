@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% load bootstrap4 i18n static poll_tags %}
+
+{% block content %}
+<h1 style="margin-bottom: 2rem">Alle Ergebnisse</h1>
+
+<div class="row">
+    <div class="col-12">
+        <div class="accordion" id="id_questions">
+            {% for question in question_list %}
+                <div class="card">
+                    <div class="card-header" id="heading-{{ question.id }}">
+                        <h5 class="mb-0" data-toggle="collapse"
+                                    data-target="#collapse-{{ question.id }}" aria-expanded="true"
+                                    aria-controls="collapse-{{ question.id }}">
+                                {{ question }}
+                            <span class="badge badge-primary badge-pill">{{ question.total }} Stimmen</span>
+                        </h5>
+                    </div>
+                    <div id="collapse-{{ question.id }}" class="collapse show" aria-labelledby="heading-{{ question.id }}"
+                         data-parent="#id_questions">
+                        <div class="card-body" style="padding:0;">
+                            <ul class="list-group">
+                                {% for choice in question.choice_set.all %}
+                                    <li class="list-group-item d-flex justify-content-between align-items-center" style="border-left: none;border-right:none;">
+                                        {{ choice.choice_text }}
+                                        <div class="col-6">
+                                            <div class="progress" style="height: 20px;">
+                                                <div class="progress-bar" role="progressbar" style="width: {% percentage choice.votes question.total %}%" aria-valuenow="{% percentage choice.votes question.total %}" aria-valuemin="0" aria-valuemax="100">{% percentage choice.votes question.total %}%</div>
+                                            </div>
+                                        </div>
+                                    </li>
+                            {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<p style="margin-top: 2rem"><a href="{% url 'polls:index' %}">Zurück zur Übersicht</a></p>
+{% endblock %}

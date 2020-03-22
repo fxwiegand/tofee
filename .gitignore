@@ -8,6 +8,7 @@ fixtures/
 log/
 __pycache__/
 localsettings.py
+tofee/localsettings.py
 .vscode
 *.pyc
 .project

@@ -2,30 +2,31 @@
 {% load bootstrap4 i18n static %}
 
 {% block content %}
-{% if latest_question_list %}
-    <div class="col-12">
-        <div class="list-group">
-        {% for question in latest_question_list %}
-            <a href="{% url 'polls:detail' question.id %}" class="list-group-item list-group-item-action">
-                <div class="d-flex w-100 justify-content-between">
-                    <h5 class="mb-1">{{ question.question_text }}</h5>
-                    <small>{{ question.pub_date }}</small>
-                </div>
-                <p class="mb-1">{{ question.detail_text }}</p>
-                {% for area in question.neighborhood.all %}
-                    <span class="badge badge-primary">{{ area }}</span>
-                {% endfor %}
-            </a>
-        {% endfor %}
-            <div class="row" style="margin-top: 2rem;">
-                <div class="col">
-                    <p>Sie haben Fragen oder Anmerkungen? <a href="{% url 'polls:feedback' %}" class="page_title">Schreiben sie uns gerne hier.</a></p>
+    {% if latest_question_list %}
+        <div class="col-12">
+            <div class="list-group">
+            {% for question in latest_question_list %}
+                <a href="{% url 'polls:detail' question.id %}" class="list-group-item list-group-item-action">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5 class="mb-1">{{ question.question_text }}</h5>
+                        <small>{{ question.pub_date }}</small>
+                    </div>
+                    <p class="mb-1">{{ question.detail_text }}</p>
+                    {% for area in question.neighborhood.all %}
+                        <span class="badge badge-primary">{{ area }}</span>
+                    {% endfor %}
+                </a>
+            {% endfor %}
+                <div class="row" style="margin-top: 2rem;">
+                    <div class="col">
+                        <p>Sie haben Fragen oder Anmerkungen? <a href="{% url 'polls:feedback' %}" class="page_title">Schreiben sie uns gerne hier.</a></p>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-{% else %}
-    <p>No polls are available.</p>
-{% endif %}
+    {% else %}
+        <p>No polls are available.</p>
+    {% endif %}
+
 
 {% endblock %}

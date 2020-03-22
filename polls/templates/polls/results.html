@@ -1,20 +1,26 @@
 {% extends "base.html" %}
-{% load bootstrap4 i18n static %}
+{% load bootstrap4 i18n static poll_tags %}
 
 {% block content %}
 <h1>{{ question.question_text }}</h1>
 
-<ul class="list-group">
+<ul class="list-group" style="margin-top: 2rem">
 {% for choice in question.choice_set.all %}
     <li class="list-group-item d-flex justify-content-between align-items-center">
         {{ choice.choice_text }}
-        <span class="badge badge-primary badge-pill">{{ choice.votes }}
-        </span>
+        <div class="col-6">
+            <div class="progress" style="height: 20px;">
+                <div class="progress-bar" role="progressbar" style="width: {% percentage choice.votes total %}%" aria-valuenow="{% percentage choice.votes total %}" aria-valuemin="0" aria-valuemax="100">{% percentage choice.votes total %}% ({{ choice.votes }} Stimmen)</div>
+        </div>
+        </div>
     </li>
 {% endfor %}
 </ul>
 
 
+
+
+
 <!--<a href="{% url 'polls:detail' question.id %}">Vote again?</a>-->
-    <a href="{% url 'polls:index' %}">Zurück zur Übersicht</a>
+<p style="margin-top: 2rem"><a href="{% url 'polls:index' %}">Zurück zur Übersicht</a> oder <a href="{% url 'polls:allresults' %}" class="page_title">zu den Ergebnissen aller Umfragen.</a></p>
 {% endblock %}

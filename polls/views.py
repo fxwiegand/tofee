@@ -1,4 +1,5 @@
 from django.contrib import messages
+from django.db.models import Sum, Subquery
 from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse
 from django.views import generic
@@ -10,7 +11,6 @@ from django.utils import timezone
 
 from .models import Choice, Question, Comment, Category
 from .forms import SignUpForm
-
 
 
 # class IndexView(generic.ListView):
@@ -43,6 +43,29 @@ class PollsView(generic.CreateView):
         return context
 
 
+class AllResultsView(generic.ListView):
+    model = Question
+    template_name = 'polls/all_results.html'
+
+    def get_queryset(self):
+        return Question.objects.annotate(
+            total=Sum('choice__votes')
+        )
+
+
+class ResultsView(generic.DetailView):
+    model = Question
+    template_name = 'polls/results.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(ResultsView, self).get_context_data(**kwargs)
+        question = self.object
+        total = 0
+        for choice in question.choice_set.all():
+            total += choice.votes
+        context['total'] = total
+        return context
+
 class CommentCreateView(generic.CreateView):
     model = Comment
     fields = ['name', 'email', 'text']
@@ -53,12 +76,6 @@ class CommentCreateView(generic.CreateView):
 class DetailView(generic.DetailView):
     model = Question
     template_name = 'polls/detail.html'
-
-
-class ResultsView(generic.DetailView):
-    model = Question
-    template_name = 'polls/results.html'
-
 
 # temporary check for being logged in to vote
 @login_required(login_url="/polls/login/")
