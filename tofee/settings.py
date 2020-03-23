@@ -33,6 +33,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'tofee',
+    'captcha',
     'polls.apps.PollsConfig',
     'bootstrap4',
 ]
