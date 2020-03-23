@@ -15,6 +15,9 @@
                                     aria-controls="collapse-{{ question.id }}">
                                 {{ question }}
                             <span class="badge badge-primary badge-pill">{{ question.total }} Stimmen</span>
+                            {% if question.isOver %}
+                            <span class="badge badge-primary badge-pill"> Umfrage beendet</span>
+                            {% endif %}
                         </h5>
                     </div>
                     <div id="collapse-{{ question.id }}" class="collapse show" aria-labelledby="heading-{{ question.id }}"
