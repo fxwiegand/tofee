@@ -114,35 +114,29 @@ margin-right: auto;
 <div id="dued_banner">
 <a href="http://dortmund-ueberrascht-dich.de" target="_blank" title="In neuem Fenster öffnen: Dortmund überrascht. Dich."><img src="https://www.dortmund.de/media/system/seitenelemente/logos/logo_dued.gif" alt="Dortmund überrascht. Dich."></a>
 </div>
+<!-- HEAD Start -->
+<header id="kopf" class="row navbar-fixed-top-sm">
 <div class="container-fluid" id="unserBody">
 <div class="row">
 
-<div id="wrapper" class="col-xs-12 col-lg-10 col-lg-pull-2">
-<!-- HEAD Start -->
-<header id="kopf" class="row navbar-fixed-top-sm">
-<nav id="topNavbar" class="navbar navbar-default">
-<div class="container-fluid">
-<div class="navbar-header">
-<div id="topNavbarlogoBox" class="navbar-brand">
-<a href="{% url 'polls:index' %}" title="Startseite tofee">
-<figure>
-<figcaption><span class="sr-only">Wappen der Stadt Dortmund</span></figcaption>
-</figure>
-</a>
-<div>
-<a href="{% url 'polls:index' %}" title="Startseite tofee">
-<figure>
-<figcaption><span class="sr-only">Wortmarke dortmund.de</span></figcaption>
-</figure>
-</a>
+<div id="topNavbarlogoBox" class="navbar-brand" style="padding-left: 20px">
+    <a href="{% url 'polls:index' %}" title="Startseite tofee">
+    <figure>
+    <figcaption><span class="sr-only">Wappen der Stadt Dortmund</span></figcaption>
+    </figure>
+    </a>
+    <div style="padding-left: 20px">
+        <a href="{% url 'polls:index' %}" title="Startseite tofee">
+        <figure>
+        <figcaption><span class="sr-only">Wortmarke dortmund.de</span></figcaption>
+        </figure>
+        </a>
+    </div>
 </div>
-</div>
-</div>
-</div>
-</nav>
 
 </div>
-</div>
+
+
 <div class="row justify-content-end">
         <!-- admin button -->
         <div class="col-2" style="padding-top: 25px">
@@ -183,7 +177,7 @@ margin-right: auto;
         <!-- END user information -->
 
         <!-- login buttons -->
-        <div class="col-1.5" style="padding-top: 25px">
+        <div class="col-1.5" style="padding-top: 25px;padding-right: 20px">
             {% if user.is_authenticated %}
                 <form method="post" action="{% url 'logout' %}">
                     {% csrf_token %}
@@ -203,7 +197,7 @@ margin-right: auto;
 <div class="col-xs-12">
 <div id="carousel-top-slider" class="carousel slide kopfPanoramaImg">
 <div class="carousel-inner" role="listbox">
-<div class="item active">
+<div class="item active d-none d-lg-block">
 <figure>
 <picture>
 <source media="(min-width: 1200px)" srcset="https://www.dortmund.de/media/bilder/pool/___allgemein_pool/dortmund/Panorama-Stadt-Standort-Hansaplatz_Roland-Gorecki03_PanoramaGross_LG.jpg">
