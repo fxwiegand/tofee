@@ -8,9 +8,10 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, authenticate
 from django.shortcuts import render, redirect
 from django.utils import timezone
+from captcha.fields import CaptchaField
 
 from .models import Choice, Question, Comment, Category
-from .forms import SignUpForm
+from .forms import SignUpForm, VoteForm
 
 
 # class IndexView(generic.ListView):
@@ -73,13 +74,15 @@ class CommentCreateView(generic.CreateView):
     success_url = '/'
 
 
-class DetailView(generic.DetailView):
+class DetailView(generic.FormView, generic.DetailView):
     model = Question
+    form_class = VoteForm
     template_name = 'polls/detail.html'
 
 # temporary check for being logged in to vote
 @login_required(login_url="/polls/login/")
 def vote(request, question_id):
+    form = VoteForm(request.POST)
     question = get_object_or_404(Question, pk=question_id)
     try:
         selected_choice = question.choice_set.get(pk=request.POST['choice'])
@@ -87,16 +90,22 @@ def vote(request, question_id):
         # Redisplay the question voting form.
         messages.error(request, _("You didn't select a choice."))
         return render(request, 'polls/detail.html', {
-            'question': question,
+            'question': question, 'form': form,
         })
     else:
-        messages.success(request, _("Your vote was successful."))
-        selected_choice.votes += 1
-        selected_choice.save()
-        # Always return an HttpResponseRedirect after successfully dealing
-        # with POST data. This prevents data from being posted twice if a
-        # user hits the Back button.
-        return redirect(reverse('polls:results', args=(question.id,)))
+        if form.is_valid():
+            messages.success(request, _("Your vote was successful."))
+            selected_choice.votes += 1
+            selected_choice.save()
+            # Always return an HttpResponseRedirect after successfully dealing
+            # with POST data. This prevents data from being posted twice if a
+            # user hits the Back button.
+            return redirect(reverse('polls:results', args=(question.id,)))
+        else:
+            form = VoteForm()
+            return render(request, 'polls/detail.html', {
+                'question': question, 'form': form,
+            })
 
 
 def signup(request):

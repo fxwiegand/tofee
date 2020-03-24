@@ -3,7 +3,7 @@
 
 {% block content %}
 <h1 style="margin-bottom: 2rem">Alle Ergebnisse</h1>
-
+{% if user.is_authenticated %}
 <div class="row">
     <div class="col-12">
         <div class="accordion" id="id_questions">
@@ -42,6 +42,6 @@
         </div>
     </div>
 </div>
-
+{% endif %}
 <p style="margin-top: 2rem"><a href="{% url 'polls:index' %}">Zurück zur Übersicht</a></p>
 {% endblock %}

@@ -3,7 +3,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from captcha.fields import CaptchaField
 
-from polls.models import Neighborhood
+from polls.models import Neighborhood, Question
 
 
 class SignUpForm(UserCreationForm):
@@ -16,3 +16,9 @@ class SignUpForm(UserCreationForm):
     class Meta:
         model = User
         fields = ('username', 'first_name', 'last_name', 'neighborhood', 'email', 'password1', 'password2', )
+
+class VoteForm(forms.Form):
+    captcha = CaptchaField()
+
+    class Meta:
+        model = Question
