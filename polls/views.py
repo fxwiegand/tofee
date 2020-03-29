@@ -10,7 +10,7 @@ from django.shortcuts import render, redirect
 from django.utils import timezone
 from captcha.fields import CaptchaField
 
-from .models import Choice, Question, Comment, Category
+from .models import Choice, Question, Comment, Category, Neighborhood
 from .forms import SignUpForm, VoteForm
 
 
@@ -44,6 +44,7 @@ class PollsView(generic.ListView):
 
     def get_context_data(self, **kwargs):
         context = super(PollsView, self).get_context_data(**kwargs)
+        context['neighborhood_count'] = Neighborhood.objects.all().count()
         context['category_list'] = Category.objects.all()
         return context
 
