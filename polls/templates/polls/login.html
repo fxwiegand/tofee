@@ -4,15 +4,14 @@
 {% block content %}
 
 {% if form.errors %}
-<p>Your username and password didn't match. Please try again.</p>
+<p>Ihr Nutzername und Passwort stimmen nicht überein. Bitte versuchen Sie es erneut.</p>
 {% endif %}
 
 {% if next %}
     {% if user.is_authenticated %}
-    <p>Your account doesn't have access to this page. To proceed,
-    please login with an account that has access.</p>
+    <p>Keine Berechtigung.</p>
     {% else %}
-    <p>Please login to see this page.</p>
+    <p>Bitte melden Sie sich and um diese Seite zu sehen.</p>
     {% endif %}
 {% endif %}
 {% if user.is_authenticated %}
@@ -36,7 +35,7 @@
 
     <input class="btn btn-primary" type="submit" value="Einloggen">
     <input type="hidden" name="next" value="{{ next }}">
-    <p>Noch nicht angemeldet? <a href="{% url 'polls:signup' %}">hier registrieren.</a></p>
+    <p>Noch nicht angemeldet? <a href="{% url 'polls:signup' %}">Hier registrieren.</a></p>
     </form>
 {% endif %}
 

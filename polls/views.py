@@ -92,13 +92,13 @@ def vote(request, question_id):
         selected_choice = question.choice_set.get(pk=request.POST['choice'])
     except (KeyError, Choice.DoesNotExist):
         # Redisplay the question voting form.
-        messages.error(request, _("You didn't select a choice."))
+        messages.error(request, _("Bitte treffen Sie eine Auswahl."))
         return render(request, 'polls/detail.html', {
             'question': question, 'form': form,
         })
     else:
         if form.is_valid():
-            messages.success(request, _("Your vote was successful."))
+            messages.success(request, _("Sie haben erfolgreich abgestimmt."))
             selected_choice.votes += 1
             selected_choice.save()
             # Always return an HttpResponseRedirect after successfully dealing
