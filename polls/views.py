@@ -23,24 +23,28 @@ from .forms import SignUpForm, VoteForm
 #         return Question.objects.order_by('-pub_date')[:5]
 
 
-class PollsView(generic.CreateView):
-    model = Comment
-    fields = ['name', 'email', 'text']
+class PollsView(generic.ListView):
+    model = Question
     template_name = 'polls/index.html'
     success_url = '/'
 
-    def get_context_data(self, **kwargs):
+    def get_queryset(self):
+        cat_id = self.kwargs.get('category_id', None)
         now = timezone.now()
+        questions = Question.objects.filter(end__gt=now)
+        if cat_id:
+            questions = Question.objects.filter(categories__id__in=[cat_id])
+        if self.request.user.is_authenticated:
+            questions = questions.filter(
+                neighborhood=self.request.user.profile.neighborhood
+            )
+        # slice to latest 5
+        questions = questions[:5]
+        return questions
+
+    def get_context_data(self, **kwargs):
         context = super(PollsView, self).get_context_data(**kwargs)
         context['category_list'] = Category.objects.all()
-        if self.request.user.is_authenticated:
-            context['latest_question_list'] = Question.objects.filter(
-                end__gt=now, neighborhood=self.request.user.profile.neighborhood
-            ).order_by('-pub_date')[:5]
-        else:
-            context['latest_question_list'] = Question.objects.filter(
-                end__gt=now
-            ).order_by('-pub_date')[:5]
         return context
 
 

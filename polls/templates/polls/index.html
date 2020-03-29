@@ -2,10 +2,10 @@
 {% load bootstrap4 i18n static %}
 
 {% block content %}
-    {% if latest_question_list %}
+    {% if question_list %}
         <div class="col-12">
             <div class="list-group">
-            {% for question in latest_question_list %}
+            {% for question in question_list %}
                 <a href="{% url 'polls:detail' question.id %}" class="list-group-item list-group-item-action">
                     <div class="d-flex w-100 justify-content-between">
                         <h5 class="mb-1">{{ question.question_text }}</h5>
@@ -25,7 +25,12 @@
             </div>
         </div>
     {% else %}
-        <p>No polls are available.</p>
+        <p>Keine Umfragen verfügbar.</p>
+        <div class="row" style="margin-top: 2rem;">
+            <div class="col">
+                <p>Sie haben Fragen oder Anmerkungen? <a href="{% url 'polls:feedback' %}" class="page_title">Schreiben sie uns gerne hier.</a></p>
+            </div>
+        </div>
     {% endif %}
 
 
