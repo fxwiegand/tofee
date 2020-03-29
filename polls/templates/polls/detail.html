@@ -1,31 +1,48 @@
 {% extends "base.html" %}
-{% load bootstrap4 i18n static %}
+{% load bootstrap4 i18n static poll_tags %}
 
 
 {% block page_title %}{{ question.question_text }}{% endblock %}
 {% block content %}
     {% if user.is_authenticated %}
-    <p>{{ question.detail_text }}</p>
-    <form action="{% url 'polls:vote' question.id %}" method="post">
-    {% csrf_token %}
-    {% for choice in question.choice_set.all %}
-        <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}">
-        <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br>
-    {% endfor %}
-    {% for field in form %}
-          <p>
-            {{ field.label_tag }}<br>
-            {{ field }}
-            {% if field.help_text %}
-              <small style="color: grey">{{ field.help_text }}</small>
-            {% endif %}
-            {% for error in field.errors %}
-              <p style="color: red">{{ error }}</p>
+        {% if question_over %}
+            <p>{{ question.detail_text }}</p>
+            <form action="{% url 'polls:vote' question.id %}" method="post">
+            {% csrf_token %}
+            {% for choice in question.choice_set.all %}
+                <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}">
+                <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br>
             {% endfor %}
-          </p>
-        {% endfor %}
-    <button class="btn btn-primary" type="submit" value="Vote">Vote</button>
-    </form>
+            {% for field in form %}
+                  <p>
+                    {{ field.label_tag }}<br>
+                    {{ field }}
+                    {% if field.help_text %}
+                      <small style="color: grey">{{ field.help_text }}</small>
+                    {% endif %}
+                    {% for error in field.errors %}
+                      <p style="color: red">{{ error }}</p>
+                    {% endfor %}
+                  </p>
+                {% endfor %}
+            <button class="btn btn-primary" type="submit" value="Vote">Vote</button>
+            </form>
+        {% else %}
+           <ul class="list-group" style="margin-top: 2rem">
+                {% for choice in question.choice_set.all %}
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        {{ choice.choice_text }}
+                        <div class="col-6">
+                            <div class="progress" style="height: 20px;">
+
+                                    <div class="progress-bar" role="progressbar" style="width: {% percentage choice.votes total %}%; color: black" aria-valuenow="{% percentage choice.votes total %}" aria-valuemin="0" aria-valuemax="100">{% percentage choice.votes total %}% ({{ choice.votes }} Stimmen)</div>
+
+                            </div>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
     {% else %}
         <p>Noch nicht angemeldet? <a href="{% url 'polls:signup' %}">Hier registrieren.</a></p>
     {% endif %}
