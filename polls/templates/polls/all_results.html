@@ -42,6 +42,8 @@
         </div>
     </div>
 </div>
+{% else %}
+    <p>Noch nicht angemeldet? <a href="{% url 'polls:signup' %}">Hier registrieren.</a></p>
 {% endif %}
 <p style="margin-top: 2rem"><a href="{% url 'polls:index' %}">Zurück zur Übersicht</a></p>
 {% endblock %}

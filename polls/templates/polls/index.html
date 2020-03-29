@@ -12,15 +12,19 @@
                         <small>{{ question.pub_date }}</small>
                     </div>
                     <p class="mb-1">{{ question.detail_text }}</p>
-                    {% for area in question.neighborhood.all %}
-                        <span class="badge badge-primary">{{ area }}</span>
-                    {% endfor %}
+                    {% if question.neighborhood.all.count < 11 %}
+                        {% for area in question.neighborhood.all %}
+                            <span class="badge badge-primary">{{ area }}</span>
+                        {% endfor %}
+                    {% endif %}
                 </a>
             {% endfor %}
                 <div class="row" style="margin-top: 2rem;">
                     <div class="col">
                         <p>Sie haben Fragen oder Anmerkungen? <a href="{% url 'polls:feedback' %}" class="page_title">Schreiben sie uns gerne hier.</a>
-                        Zu den <a href="{% url 'polls:allresults' %}" class="page_title">Ergebnissen aller Umfragen gelangen sie hier.</a></p>
+                        {% if user.is_authenticated %}
+                            Zu den <a href="{% url 'polls:allresults' %}" class="page_title">Ergebnissen aller Umfragen gelangen sie hier.</a></p>
+                        {% endif %}
                     </div>
                 </div>
             </div>
