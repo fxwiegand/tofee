@@ -8,7 +8,7 @@
             {% for question in question_list %}
                 <a href="{% url 'polls:detail' question.id %}" class="list-group-item list-group-item-action">
                     <div class="d-flex w-100 justify-content-between">
-                        <h5 class="mb-1">{{ question.question_text }}</h5>
+                        <h5 class="mb-1" style="color: #ba4c3d">{{ question.question_text }}</h5>
                         <small>{{ question.pub_date }}</small>
                     </div>
                     <p class="mb-1">{{ question.detail_text }}</p>

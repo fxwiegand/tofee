@@ -10,7 +10,7 @@
         {{ choice.choice_text }}
         <div class="col-6">
             <div class="progress" style="height: 20px;">
-                <div class="progress-bar" role="progressbar" style="width: {% percentage choice.votes total %}%; color: black" aria-valuenow="{% percentage choice.votes total %}" aria-valuemin="0" aria-valuemax="100">{% percentage choice.votes total %}% ({{ choice.votes }} Stimmen)</div>
+                <div class="progress-bar" role="progressbar" style="width: {% percentage choice.votes total %}%; color: black; background-color: #ba4c3d" aria-valuenow="{% percentage choice.votes total %}" aria-valuemin="0" aria-valuemax="100">{% percentage choice.votes total %}% ({{ choice.votes }} Stimmen)</div>
         </div>
         </div>
     </li>

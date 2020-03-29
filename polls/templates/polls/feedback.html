@@ -1,16 +1,16 @@
 {% extends "base.html" %}
 {% load bootstrap4 i18n static %}
 
+{% block page_title %}Ihr persönliches Feedback hier:{% endblock %}
+
 {% block content %}
 
 <div class="row" style="margin-top: 2rem;">
     <div class="col">
-        <h4>Ihr persönliches Feedback hier:</h4>
-        <hr/>
         <form method="post" role="form" action="">
             {% csrf_token %}
             {% bootstrap_form form %}
-            <button class="btn btn-primary" type="submit" formnovalidate>
+            <button class="btn btn-secondary red" type="submit" formnovalidate>
                 Absenden
             </button>
         </form>

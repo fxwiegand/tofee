@@ -5,7 +5,8 @@
 {{ block.super }}
 <style>
     .btn { margin-top: 8px;}
-    .btn-group { margin-left: 5px;}
+    .btn-group { margin-left: 5px; padding: 5px}
+    .red {background-color: #ba4c3d}
 </style>
 {% endblock %}
 
@@ -14,30 +15,135 @@
 
 
 {% block bootstrap4_content %}
-<div class="container">
-    <div class="row" style="margin-top: 20px;">
-        <div class="col-md-4 col-sm-12">
-            <h1><a href="{% url 'polls:index' %}" class="page_title">tofee</a></h1>
-        </div>
+ <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>dortmund.de - Startseite</title>
+    <meta name="keywords" content="stadt, nachrichten, news, veranstaltungen, events, bürgerservice, verwaltung, service, lokalpolitik, wirtschaft, kultur, freizeit">
+    <meta name="description" content="Offizielles Stadtportal mit Informationen zu Politik, Wirtschaft, Kultur, Tourismus und Bürgerservice.">
+    <meta name="author" content="Stadt Dortmund, Dortmund-Agentur">
+    <meta name="copyright" content="Dortmund-Agentur, Stadt Dortmund">
+    <meta name="google-site-verification" content="lfFma7wpr208i0DtMLwFHVCAybkFqBFOYdCwWC0oZio">
+    <meta name="robots" content="index, follow, noodp, noydir">
+    <link rel="shortcut icon" type="image/x-icon" href="https://www.dortmund.de/favicon.ico">
+    <link rel="alternate" type="application/rss+xml" title="dortmund.de Nachrichten" href="http://www.dortmund.de/de/dortmund_de/feeds/news_rss.xml">
+    <link rel="alternate" type="application/rss+xml" title="dortmund.de Veranstaltungskalender" href="http://www.dortmund.de/de/dortmund_de/feeds/vk_rss.xml">
+    <link rel="canonical" href="http://www.dortmund.de">
+    <link rel="stylesheet" type="text/css" href="https://www.dortmund.de/media/system/css_1/jquery_ui/jquery-uimin.css">
+    <link rel="stylesheet" type="text/css" href="https://www.dortmund.de/media/system/css_1/main_dode.css">
+    <link rel="stylesheet" type="text/css" href="https://www.dortmund.de/media/system/css_1/js_activ.css">
+    <link rel="stylesheet" type="text/css" href="https://www.dortmund.de/media/system/css_1/tmp7.css">
+    <link rel="stylesheet" type="text/css" href="https://www.dortmund.de/media/system/css_1/magnific-popup.css">
+    <script type="text/javascript" async="" defer="" src="https://www.dortmund.de/dortmund.labs.jochum-mediaservices.net/piwik.js"></script><script>
+    document.createElement( "picture" );
+    </script>
+    <script src="https://www.dortmund.de/media/de/system/js/jscollector.js"></script>
+    <style>
+        @media (min-width: 1200px) {
+        #wb-lg a {
+        width:160px;
+        height:600px;
+        display:block;
+        margin-left: auto;
+        margin-right: auto;
+        }
+        #wb-lg figcaption {
+        width:160px;
+        margin-left: auto;
+        margin-right: auto;
+        }
+        #wb-lg a {
+        margin-left: 0;
+        margin-right: 0;
+        }
+        #wb-lg figcaption {
+        margin-left: 0;
+        margin-right: 0;
+        margin-top: 69px;
+        }
+        }
+        @media (min-width: 992px) AND (max-width: 1199px) {
+        #wb-md a {
+        width:728px;
+        height:90px;
+        display:block;
+        margin-left: auto;
+        margin-right: auto;
+        }
+        #wb-md figcaption {
+        width:728px;
+        margin-left: auto;
+        margin-right: auto;
+        }
+        }
+        @media (min-width: 768px) AND (max-width: 991px) {
+        #wb-sm a {
+        width:728px;
+        height:90px;
+        display:block;
+        margin-left: auto;
+        margin-right: auto;
+        }
+        #wb-sm figcaption {
+        width:728px;
+        margin-left: auto;
+        margin-right: auto;
+        }
+        }
+        @media (max-width: 767px) {
+        #wb-xs a {
+        width:300px;
+        height:50px;
+        display:block;
+        margin-left: auto;
+        margin-right: auto;
+        }
+        #wb-xs figcaption {
+        width:300px;
+        margin-left: auto;
+        margin-right: auto;
+        }
+        }
+    </style>
+</head>
 
+    <div id="dued_banner" class="hidden-sm hidden-xs">
+    <a href="http://dortmund-ueberrascht-dich.de" target="_blank" title="In neuem Fenster öffnen: Dortmund überrascht. Dich."><img src="https://www.dortmund.de/media/system/seitenelemente/logos/logo_dued.gif" alt="Dortmund überrascht. Dich."></a>
+    </div>
+<!-- HEAD Start -->
+<header id="kopf" class="row navbar-fixed-top-sm">
+<div class="container">
+    <div class="row">
+        <div id="topNavbarlogoBox" class="navbar-brand col-md-3 col-sm-12">
+            <a href="{% url 'polls:index' %}" title="Startseite tofee">
+                <figure><figcaption><span class="sr-only">Wappen der Stadt Dortmund</span></figcaption></figure>
+            </a>
+            <div class="hidden-xs">
+                <a href="{% url 'polls:index' %}" title="Startseite tofee">
+                    <figure><figcaption><span class="sr-only">Wortmarke dortmund.de</span></figcaption></figure>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="row justify-content-end">
         <div class="col-md-8 col-sm-12 text-right">
             {% if category_list %}
                 {# Kategorien-Menü nur, wenn die Liste der Kategorien verfügbar sind #}
                 <div class="dropdown" style="display: inline;">
-                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Filter</button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                    {% for category in category_list %}
-                        <a href="{% url 'polls:index' category.id %}" class="dropdown-item" role="button">{{ category }}</a>
-                    {% endfor %}
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Filter</button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                        {% for category in category_list %}
+                            <a href="{% url 'polls:index' category.id %}" class="dropdown-item" role="button">{{ category }}</a>
+                        {% endfor %}
+                    </div>
                 </div>
-            </div>
             {% endif %}
             {% if user.is_staff %}
-                <a href="{% url 'admin:index' %}" class="page_title"><button class="btn btn-primary">Zur Adminpage</button></a>
+                <a href="{% url 'admin:index' %}" class="page_title"><button class="btn btn-secondary red">Zur Adminpage</button></a>
             {% endif %}
             {% if user.is_authenticated %}
             <div class="btn-group" role="group">
-                <button type="button" class="btn btn-primary">
+                <button type="button" class="btn btn-secondary red">
                     <span style="white-space: nowrap;">
                         {% if user.get_full_name %}
                             {{ user.get_full_name }}
@@ -53,22 +159,47 @@
             {% endif %}
             <div class="btn-group" role="group">
                 {% if user.is_authenticated %}
-                    <a href="{% url 'logout' %}" class="page_title"><button class="btn btn-primary">Logout</button></a>
+                    <a href="{% url 'logout' %}" class="page_title"><button class="btn btn-secondary red">Logout</button></a>
                 {% else %}
-                    <a href="{% url 'polls:login' %}" class="page_title"><button class="btn btn-primary">Zum Login</button></a>
+                    <a href="{% url 'polls:login' %}" class="page_title"><button class="btn btn-secondary red">Zum Login</button></a>
                 {% endif %}
             </div>
         </div><!-- END login buttons -->
         <!-- admin button -->
     </div>
 
-    <div class="row">
-        <div class="col-12">
-            <h3 class="page_title">{% block page_title %}{% endblock %}</h3>
+
+</div>
+</header>
+<!-- HEAD End -->
+<div class="container">
+    <div id="kopfPanorama" class="row col-abstandUnten">
+        <div class="col-xs-12 hidden-xs">
+            {% load static %}
+            <img src="{% static 'doNavBar.png' %}" width="100%"/>
+            <figure>
+                <picture>
+                    <source media="(min-width: 1200px)" srcset="https://www.dortmund.de/media/bilder/pool/___allgemein_pool/dortmund/Panorama-Stadt-Standort-Hansaplatz_Roland-Gorecki03_PanoramaGross_LG.jpg">
+                    <source media="(min-width: 992px)" srcset="https://www.dortmund.de/media/bilder/pool/___allgemein_pool/dortmund/Panorama-Stadt-Standort-Hansaplatz_Roland-Gorecki03_PanoramaGross_MD.jpg">
+                    <source media="(min-width: 768px)" srcset="https://www.dortmund.de/media/bilder/pool/___allgemein_pool/dortmund/Panorama-Stadt-Standort-Hansaplatz_Roland-Gorecki03_PanoramaGross_SM.jpg">
+                    <img src="https://www.dortmund.de/media/bilder/pool/___allgemein_pool/dortmund/Panorama-Stadt-Standort-Hansaplatz_Roland-Gorecki03_PanoramaGross_XS.jpg" alt="Westfalenpark">
+                </picture>
+            </figure>
+        </div>
+    </div> <!--kopfPanorama-->
+    <div id="startseitenInfoZeile" class="row">
+        <div class="col-xs-12">
+        <h2 class="font-16 nomargin ">{% now "SHORT_DATETIME_FORMAT" %}</h2>
         </div>
     </div>
+    <div class="row">
+        <div class="col-12">
+            <h3 class="page_title" style="color: #ba4c3d">{% block page_title %}{% endblock %}</h3>
+        </div>
+    </div>
+</div>
 
-
+<div class="container">
     <div class="row">
         <div class="col-12">
             <hr class="narrow" />

@@ -1,8 +1,10 @@
 {% extends "base.html" %}
 {% load bootstrap4 i18n static poll_tags %}
 
+{% block page_title %}<h1 style="margin-bottom: 2rem; color: #ba4c3d">Alle Ergebnisse</h1>{% endblock %}
+
 {% block content %}
-<h1 style="margin-bottom: 2rem">Alle Ergebnisse</h1>
+
 {% if user.is_authenticated %}
 <div class="row">
     <div class="col-12">
@@ -14,7 +16,7 @@
                                     data-target="#collapse-{{ question.id }}" aria-expanded="true"
                                     aria-controls="collapse-{{ question.id }}">
                                 {{ question }}
-                            <span class="badge badge-primary badge-pill">{{ question.total }} Stimmen</span>
+                            <span class="badge badge-primary badge-pill" style="background-color: #ba4c3d">{{ question.total }} Stimmen</span>
                             {% if question.isOver %}
                             <span class="badge badge-primary badge-pill"> Umfrage beendet</span>
                             {% endif %}
@@ -29,7 +31,7 @@
                                         {{ choice.choice_text }}
                                         <div class="col-6">
                                             <div class="progress" style="height: 20px;">
-                                                <div class="progress-bar" role="progressbar" style="width: {% percentage choice.votes question.total %}%" aria-valuenow="{% percentage choice.votes question.total %}" aria-valuemin="0" aria-valuemax="100">{% percentage choice.votes question.total %}%</div>
+                                                <div class="progress-bar" role="progressbar" style="width: {% percentage choice.votes question.total %}%; background-color: #ba4c3d" aria-valuenow="{% percentage choice.votes question.total %}" aria-valuemin="0" aria-valuemax="100">{% percentage choice.votes question.total %}%</div>
                                             </div>
                                         </div>
                                     </li>

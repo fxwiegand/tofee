@@ -24,7 +24,7 @@
             {% endfor %}
           </p>
         {% endfor %}
-    <button class="btn btn-primary" type="submit" value="Vote">Vote</button>
+    <button class="btn btn-secondary red" type="submit" value="Vote">Vote</button>
     </form>
     {% else %}
         <p>Noch nicht angemeldet? <a href="{% url 'polls:signup' %}">Hier registrieren.</a></p>

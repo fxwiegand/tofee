@@ -3,7 +3,7 @@
 !requirements.txt
 !.gitignore
 .idea/
-media/
+tofee/static/
 fixtures/
 log/
 __pycache__/
