@@ -46,6 +46,10 @@ class PollsView(generic.ListView):
         context = super(PollsView, self).get_context_data(**kwargs)
         context['neighborhood_count'] = Neighborhood.objects.all().count()
         context['category_list'] = Category.objects.all()
+
+        now = timezone.now()
+        old_questions = Question.objects.filter(end__lt=now)
+        context['old_questions'] = old_questions
         return context
 
 
