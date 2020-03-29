@@ -10,7 +10,7 @@ class SignUpForm(UserCreationForm):
     first_name = forms.CharField(max_length=30, required=False, help_text='Optional.', label = 'Vorname')
     last_name = forms.CharField(max_length=30, required=False, help_text='Optional.', label = 'Nachname')
     email = forms.EmailField(max_length=254, help_text='Notwendig. Geben Sie eine gültige Adresse ein.')
-    neighborhood = forms.ModelChoiceField(queryset=Neighborhood.objects.all())
+    neighborhood = forms.ModelChoiceField(queryset=Neighborhood.objects.all(), label='Stadtbezirk')
     captcha = CaptchaField()
 
     class Meta:

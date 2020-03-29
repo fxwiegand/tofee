@@ -2,7 +2,7 @@
 {% load bootstrap4 i18n static %}
 
 {% block content %}
-    <h2>Sign up</h2>
+    <h2>Registrierung</h2>
   <form method="post">
     {% csrf_token %}
     {% for field in form %}
@@ -17,6 +17,6 @@
         {% endfor %}
       </p>
     {% endfor %}
-    <button class="btn btn-primary" type="submit">Sign up</button>
+    <button class="btn btn-primary" type="submit">Registrieren</button>
   </form>
 {% endblock %}
