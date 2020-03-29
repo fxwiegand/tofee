@@ -3,11 +3,9 @@
 !requirements.txt
 !.gitignore
 .idea/
-tofee/static/
 fixtures/
 log/
 __pycache__/
-tofee/localsettings.py
 tofee/localsettings.py
 .vscode
 *.pyc
