@@ -25,7 +25,7 @@
                     {% endfor %}
                   </p>
                 {% endfor %}
-            <button class="btn btn-primary" type="submit" value="Vote">Vote</button>
+            <button class="btn btn-secondary red" type="submit" value="Vote">Vote</button>
             </form>
         {% else %}
            <ul class="list-group" style="margin-top: 2rem">
@@ -35,7 +35,7 @@
                         <div class="col-6">
                             <div class="progress" style="height: 20px;">
 
-                                    <div class="progress-bar" role="progressbar" style="width: {% percentage choice.votes total %}%; color: black" aria-valuenow="{% percentage choice.votes total %}" aria-valuemin="0" aria-valuemax="100">{% percentage choice.votes total %}% ({{ choice.votes }} Stimmen)</div>
+                                    <div class="progress-bar" role="progressbar" style="width: {% percentage choice.votes total %}%; color: black; background-color: #ba4c3d" aria-valuenow="{% percentage choice.votes total %}" aria-valuemin="0" aria-valuemax="100">{% percentage choice.votes total %}% ({{ choice.votes }} Stimmen)</div>
 
                             </div>
                         </div>
