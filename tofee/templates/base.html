@@ -118,7 +118,7 @@
             <a href="{% url 'polls:index' %}" title="Startseite tofee">
                 <figure><figcaption><span class="sr-only">Wappen der Stadt Dortmund</span></figcaption></figure>
             </a>
-            <div class="hidden-xs">
+            <div class="hidden-xs hidden-sm">
                 <a href="{% url 'polls:index' %}" title="Startseite tofee">
                     <figure><figcaption><span class="sr-only">Wortmarke dortmund.de</span></figcaption></figure>
                 </a>
@@ -126,15 +126,17 @@
         </div>
     </div>
     <div class="row justify-content-end">
-        <div class="col-md-8 col-sm-12 text-right">
+        <div class="text-right">
             {% if category_list %}
-                {# Kategorien-Menü nur, wenn die Liste der Kategorien verfügbar sind #}
-                <div class="dropdown" style="display: inline">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Filter</button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                        {% for category in category_list %}
-                            <a href="{% url 'polls:index' category.id %}" class="dropdown-item" role="button">{{ category }}</a>
-                        {% endfor %}
+                <div class="btn-group" role="group">
+                    {# Kategorien-Menü nur, wenn die Liste der Kategorien verfügbar sind #}
+                    <div class="dropdown" style="display: inline">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Filter</button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                            {% for category in category_list %}
+                                <a href="{% url 'polls:index' category.id %}" class="dropdown-item" role="button">{{ category }}</a>
+                            {% endfor %}
+                        </div>
                     </div>
                 </div>
             {% endif %}
@@ -174,7 +176,7 @@
 <!-- HEAD End -->
 <div class="container">
     <div id="kopfPanorama" class="row col-abstandUnten">
-        <div class="col-xs-12 hidden-xs">
+        <div class="col-xs-12 hidden-xs hidden-sm">
             {% load static %}
             <img src="{% static 'doNavBar.png' %}" width="100%"/>
             <figure>
@@ -188,8 +190,8 @@
         </div>
     </div> <!--kopfPanorama-->
     <div id="startseitenInfoZeile" class="row">
-        <div class="col-xs-12">
-        <h2 class="font-16 nomargin ">{% now "SHORT_DATETIME_FORMAT" %}</h2>
+        <div class="col-12 hidden-xs hidden-sm">
+            <h2 class="font-16 nomargin ">{% now "SHORT_DATETIME_FORMAT" %}</h2>
         </div>
     </div>
     <div class="row">
