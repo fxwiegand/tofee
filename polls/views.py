@@ -46,6 +46,10 @@ class PollsView(generic.ListView):
         context = super(PollsView, self).get_context_data(**kwargs)
         context['neighborhood_count'] = Neighborhood.objects.all().count()
         context['category_list'] = Category.objects.all()
+
+        now = timezone.now()
+        old_questions = Question.objects.filter(end__lt=now)
+        context['old_questions'] = old_questions
         return context
 
 
@@ -72,6 +76,7 @@ class ResultsView(generic.DetailView):
         context['total'] = total
         return context
 
+
 class CommentCreateView(generic.CreateView):
     model = Comment
     fields = ['name', 'email', 'text']
@@ -83,6 +88,18 @@ class DetailView(generic.FormView, generic.DetailView):
     model = Question
     form_class = VoteForm
     template_name = 'polls/detail.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(DetailView, self).get_context_data(**kwargs)
+        now = timezone.now()
+        question = self.object
+        old = question.end > now
+        total = 0
+        for choice in question.choice_set.all():
+            total += choice.votes
+        context['total'] = total
+        context['question_over'] = old
+        return context
 
 # temporary check for being logged in to vote
 @login_required(login_url="/polls/login/")
