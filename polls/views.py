@@ -121,16 +121,20 @@ def vote(request, question_id):
                 selected_choice = question.choice_set.get(pk=form.cleaned_data['vote'])
                 selected_choice.votes += 1
                 selected_choice.save()
+                question.has_voted.add(request.user)
                 messages.success(request, _("Sie haben erfolgreich abgestimmt."))
                 return redirect(reverse('polls:results', args=(question.id,)))
         except (KeyError, Choice.DoesNotExist):
             messages.error(request, _("Bitte treffen Sie eine Auswahl."))
     else:
         form = VoteForm(question_id=question_id)
+        if request.user in question.has_voted.all():
+            messages.error(request, _("Sie haben bereits abgestimmt."))
+            return redirect(reverse('polls:results', args=(question.id,)))
 
     return render(request, 'polls/detail.html', {
         'question': question, 'form': form,
-        'total':total,'question_over':old,
+        'total': total, 'question_over': old,
     })
 
 
