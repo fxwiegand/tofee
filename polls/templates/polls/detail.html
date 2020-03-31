@@ -1,31 +1,25 @@
 {% extends "base.html" %}
 {% load bootstrap4 i18n static poll_tags %}
 
+{% block bootstrap4_extra_head %}
+{{ block.super }}
+<style>
+    #id_captcha_1 { width: 6rem; margin-top: 5px;}
+    .btn-group { margin-left: 5px;}
+</style>
+{% endblock %}
 
 {% block page_title %}{{ question.question_text }}{% endblock %}
 {% block content %}
     {% if user.is_authenticated %}
         {% if question_over %}
             <p>{{ question.detail_text }}</p>
-            <form action="{% url 'polls:vote' question.id %}" method="post">
-            {% csrf_token %}
-            {% for choice in question.choice_set.all %}
-                <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}">
-                <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br>
-            {% endfor %}
-            {% for field in form %}
-                  <p>
-                    {{ field.label_tag }}<br>
-                    {{ field }}
-                    {% if field.help_text %}
-                      <small style="color: grey">{{ field.help_text }}</small>
-                    {% endif %}
-                    {% for error in field.errors %}
-                      <p style="color: red">{{ error }}</p>
-                    {% endfor %}
-                  </p>
-                {% endfor %}
-            <button class="btn btn-primary" type="submit" value="Vote">Vote</button>
+            <form action="{% url 'polls:vote' question.id %}" method="post" novalidate>
+                {% csrf_token %}
+                {% bootstrap_field form.vote show_label=False %}
+                <label for="captcha">Captcha:</label>
+                {% bootstrap_field form.captcha show_label=False%}
+                <button class="btn btn-primary" type="submit" value="Vote">Vote</button>
             </form>
         {% else %}
            <ul class="list-group" style="margin-top: 2rem">
@@ -34,9 +28,7 @@
                         {{ choice.choice_text }}
                         <div class="col-6">
                             <div class="progress" style="height: 20px;">
-
                                     <div class="progress-bar" role="progressbar" style="width: {% percentage choice.votes total %}%; color: black" aria-valuenow="{% percentage choice.votes total %}" aria-valuemin="0" aria-valuemax="100">{% percentage choice.votes total %}% ({{ choice.votes }} Stimmen)</div>
-
                             </div>
                         </div>
                     </li>

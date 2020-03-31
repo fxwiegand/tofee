@@ -6,7 +6,7 @@
         <div class="col-12">
             <div class="list-group">
             {% for question in question_list %}
-                <a href="{% url 'polls:detail' question.id %}" class="list-group-item list-group-item-action">
+                <a href="{% url 'polls:vote' question.id %}" class="list-group-item list-group-item-action">
                     <div class="d-flex w-100 justify-content-between">
                         <h5 class="mb-1">
                             {{ question.question_text }}

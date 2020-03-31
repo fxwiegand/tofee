@@ -71,9 +71,11 @@ class ResultsView(generic.DetailView):
         context = super(ResultsView, self).get_context_data(**kwargs)
         question = self.object
         total = 0
+        print("ich werde aufgerufen")
         for choice in question.choice_set.all():
             total += choice.votes
         context['total'] = total
+        print(total)
         return context
 
 
@@ -84,50 +86,52 @@ class CommentCreateView(generic.CreateView):
     success_url = '/'
 
 
-class DetailView(generic.FormView, generic.DetailView):
-    model = Question
-    form_class = VoteForm
-    template_name = 'polls/detail.html'
-
-    def get_context_data(self, **kwargs):
-        context = super(DetailView, self).get_context_data(**kwargs)
-        now = timezone.now()
-        question = self.object
-        old = question.end > now
-        total = 0
-        for choice in question.choice_set.all():
-            total += choice.votes
-        context['total'] = total
-        context['question_over'] = old
-        return context
+# class DetailView(generic.FormView, generic.DetailView):
+#     model = Question
+#     form_class = VoteForm
+#     template_name = 'polls/detail.html'
+#
+#     def get_context_data(self, **kwargs):
+#         context = super(DetailView, self).get_context_data(**kwargs)
+#         now = timezone.now()
+#         question = self.object
+#         old = question.end > now
+#         total = 0
+#         for choice in question.choice_set.all():
+#             total += choice.votes
+#         context['total'] = total
+#         context['question_over'] = old
+#         return context
 
 # temporary check for being logged in to vote
 @login_required(login_url="/polls/login/")
 def vote(request, question_id):
-    form = VoteForm(request.POST)
     question = get_object_or_404(Question, pk=question_id)
-    try:
-        selected_choice = question.choice_set.get(pk=request.POST['choice'])
-    except (KeyError, Choice.DoesNotExist):
-        # Redisplay the question voting form.
-        messages.error(request, _("Bitte treffen Sie eine Auswahl."))
-        return render(request, 'polls/detail.html', {
-            'question': question, 'form': form,
-        })
+    now = timezone.now()
+    old = question.end > now
+
+    total = 0
+    for choice in question.choice_set.all():
+        total += choice.votes
+
+    if request.POST:
+        form = VoteForm(request.POST, question_id=question_id)
+        try:
+            if form.is_valid():
+                selected_choice = question.choice_set.get(pk=form.cleaned_data['vote'])
+                selected_choice.votes += 1
+                selected_choice.save()
+                messages.success(request, _("Sie haben erfolgreich abgestimmt."))
+                return redirect(reverse('polls:results', args=(question.id,)))
+        except (KeyError, Choice.DoesNotExist):
+            messages.error(request, _("Bitte treffen Sie eine Auswahl."))
     else:
-        if form.is_valid():
-            messages.success(request, _("Sie haben erfolgreich abgestimmt."))
-            selected_choice.votes += 1
-            selected_choice.save()
-            # Always return an HttpResponseRedirect after successfully dealing
-            # with POST data. This prevents data from being posted twice if a
-            # user hits the Back button.
-            return redirect(reverse('polls:results', args=(question.id,)))
-        else:
-            form = VoteForm()
-            return render(request, 'polls/detail.html', {
-                'question': question, 'form': form,
-            })
+        form = VoteForm(question_id=question_id)
+
+    return render(request, 'polls/detail.html', {
+        'question': question, 'form': form,
+        'total':total,'question_over':old,
+    })
 
 
 def signup(request):

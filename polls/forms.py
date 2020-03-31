@@ -18,7 +18,13 @@ class SignUpForm(UserCreationForm):
         fields = ('username', 'first_name', 'last_name', 'neighborhood', 'email', 'password1', 'password2', )
 
 class VoteForm(forms.Form):
+    vote = forms.ChoiceField(choices=(), label='Auswahl', widget=forms.RadioSelect,)
     captcha = CaptchaField()
 
-    class Meta:
-        model = Question
+    def __init__(self, *args, **kwargs):
+        self._qid = kwargs.pop('question_id', None)
+        super().__init__(*args, **kwargs)
+        if self._qid is not None:
+            question = Question.objects.get(pk=self._qid)
+            choices = [(c.id, c.choice_text) for c in question.choice_set.all()]
+            self.fields['vote'].choices = choices
