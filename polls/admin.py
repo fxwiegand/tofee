@@ -21,6 +21,7 @@ class CategoryAdmin(admin.ModelAdmin):
 @admin.register(Question)
 class QuestionAdmin(admin.ModelAdmin):
     inlines = [ChoiceInlineAdmin]
+    exclude = ['has_voted']
 
 
 @admin.register(Comment)

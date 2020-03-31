@@ -26,7 +26,7 @@ class Question(models.Model):
     categories = models.ManyToManyField(Category)
     pub_date = models.DateTimeField('Veröffentlichungszeitpunkt')
     end = models.DateTimeField(verbose_name="Endzeitpunkt der Umfrage")
-    has_voted = models.ManyToManyField(User)
+    has_voted = models.ManyToManyField(User, blank=True)
 
     def __str__(self):
         return self.question_text
