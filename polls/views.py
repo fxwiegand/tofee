@@ -39,7 +39,7 @@ class PollsView(generic.ListView):
                 neighborhood=self.request.user.profile.neighborhood
             )
         # slice to latest 5
-        questions = questions[:5]
+        questions = questions.order_by('-pub_date')[:5]
         return questions
 
     def get_context_data(self, **kwargs):
